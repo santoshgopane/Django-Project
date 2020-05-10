@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<title>Homepage</title>
 		<meta charset="utf-8">
 		<title>Bloger</title>
 		<!-- Description, Keywords and Author -->
@@ -47,18 +48,19 @@
 						<!-- Collect the nav links, forms, and other content for toggling -->
 						<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 							<ul class="nav navbar-nav navbar-right">
-								<li><a href="registration.html">Signup</a></li>
-								<li><a href="login.html">Login</a></li>
-								<li class="dropdown">
-									<a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu <span class="caret"></span></a>
-									<ul class="dropdown-menu" role="menu">
-										<li><a href="#event">Events</a></li>
-										<li><a href="#blog">New Blogs</a></li>
-										<li><a href="#subscribe">Subscribe</a></li>
-										<li><a href="#team">Executive Team</a></li>
-										<li><a href="#">One more separated link</a></li>
-									</ul>
-								</li>
+								
+								<li><a href="">Home</a></li>
+								{% if user.is_authenticated %}								
+								
+								<li>Hello,{{user.first_name}}</li>
+								<li><a href="accounts/logout">Logout</a></li>
+								{% else %}
+								<li><a href="accounts/register">Signup</a></li>
+
+								<li><a href="accounts/login">Login</a></li>
+							
+								{% endif %}
+
 							</ul>
 						</div><!-- /.navbar-collapse -->
 					</div><!-- /.container-fluid -->
@@ -69,8 +71,12 @@
 			<div class="banner">
 				<div class="container">
 					<!-- heading -->
-					<h2>I'm {{name.name}} Heading for This Page</h2>
+					{% if user.is_authenticated %}
+					<h2>I'm {{user.first_name}}, Coder for This Page</h2>
 					<!-- paragraph -->
+					{% else %}
+					<h2>I'm Coder for This Page</h2>
+					{% endif %}
 					<p>It is our belief that in order to be most efficient it requires adaptive technology and software our customers can focus on their core business.</p>
 				</div>
 			</div>
@@ -134,7 +140,7 @@
 							<div class="event-item">
 								<!-- image -->
 								<!-- <img class="img-responsive" src="{% static 'img/event/1.jpg' %}" alt="Events" /> -->
-								<img class="img-responsive" src="{{baseURL}}/{{dest.image}}" alt="Events" />
+								<img class="img-responsive" src="{{dest.image.url}}" alt="Events" />
 								<!-- heading -->
 								<h4><a href="#">{{dest.name}} on stage</a></h4>
 								<!-- sub text -->
